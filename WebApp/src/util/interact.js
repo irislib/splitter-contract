@@ -1,5 +1,5 @@
 //export const splitterContract;
-import React, { Component }  from 'react';
+import React from 'react';
 require("dotenv").config();
 const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");

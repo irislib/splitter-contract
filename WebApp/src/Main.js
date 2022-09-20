@@ -10,12 +10,11 @@ import {
 } from "./util/interact.js";
 
 import alchemylogo from "./alchemylogo.svg";
-import tmppng from "./tmp.png";
 const HelloWorld = () => {
   //state variables
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
-  const [data, setData] = useState("-"); //default message
+  const [data, setData] = useState("-");
   const [data2, setData2] = useState("-");
   const [nftCollectionInput, setNewCollectionInput] = useState("");
   const [orga, setorga] = useState("0x258eE9CAb039295B155Bd3487Df04542975918F3");
@@ -33,16 +32,16 @@ const HelloWorld = () => {
     addWalletListener();
   }, []);
 
-  function addSmartContractListener() { //TODO: implement
+  function addSmartContractListener() { 
     
   }
 
-  function addWalletListener() { //TODO: implement
+  function addWalletListener() { 
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", (accounts) => {
         if (accounts.length > 0) {
           setWallet(accounts[0]);
-          setStatus("Write a message in the text-field above.");
+          setStatus("Enter the NFT collection address in the text-field above.");
         } else {
           setWallet("");
           setStatus("🦊 Connect to Metamask using the top right button.");
@@ -79,32 +78,12 @@ const HelloWorld = () => {
     console.log(data2.toString());
     setData2(data2.toString());
   };
-  const onWithdrawalPRessed = async () => { //TODO: implement
+  const onWithdrawalPRessed = async () => { 
     const { status } = await withdrawal(nftCollectionInput,walletAddress);
     console.log(status.toString());
     setStatus(status);
   };
-  //the UI of our component
-  /*
-<h2 style={{ paddingTop: "18px" }}>NFT and ETH Balances</h2>
-        <table id="organisationtable">
-            <tr>
-              <th>Your shares in organisation: </th>
-              <th>25</th>
-            </tr>
-            <tr>
-              <th>Available NFTs to withdrawal:</th>
-              <th>100</th>
-            </tr>
-        </table>
-         <div class="preview">
-      <h2 style={{ paddingTop: "0px" }}>Latest NFT added to Organisation</h2>
-            <div>
-              <img class="imagepreview" src={tmppng}></img>
-              <p>View this NFT on Opensea <a>here</a></p>
-            </div>
-      </div>
-  */
+  
   return (
     <div class="container" id="container">
       <div class="topbar">
@@ -135,12 +114,12 @@ const HelloWorld = () => {
           <h2 style={{ paddingTop: "18px" }}>NFT Balances</h2>
             <table id="organisationtable">
                 <tr>
-                  <th><p>Amount of NFTs to withdrawal: </p></th>
-                  <th><p>{data} </p></th>
+                  <th>Amount of NFTs to withdrawal: </th>
+                  <th>{data} </th>
                 </tr>
                 <tr>
-                  <th><p>Total NFTs released: </p></th>
-                  <th><p>{data2} </p></th>
+                  <th>Total NFTs released: </th>
+                  <th>{data2} </th>
                 </tr>
             </table>
           <button id="publish" onClick={onUpdatePressed}>
@@ -152,11 +131,9 @@ const HelloWorld = () => {
         </div>
           <p>Are there NFTs missing from Balances? Add them <a>here</a></p>
           <div>
-
+            
           </div>
       </div>
-     
-
     </div>
     </div>
   );

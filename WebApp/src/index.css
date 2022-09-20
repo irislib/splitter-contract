@@ -12,7 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 80vh;
-    padding: 40vh;
+    
     font-size: 16px;
 }
 a{
@@ -29,7 +29,7 @@ th{
   
   position: relative;
   flex-direction: column;
-  width: 120vh;
+  min-width: 70vh;
   min-height: 140px;
   padding: 32px;
   border-radius: 16px;
