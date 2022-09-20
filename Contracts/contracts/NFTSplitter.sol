@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts (last updated v4.7.0) (finance/PaymentSplitter.sol)
-// Added functions for Iris
+// Added functions for Iris.to
 
 pragma solidity ^0.8.0;
 

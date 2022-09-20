@@ -16,7 +16,7 @@ import {
 import alchemylogo from "./alchemylogo.svg";
 import ETHWithdrawalView from "./Views/ETHWithdrawalView.js";
 import TokenWithdrawalView from "./Views/TokenWithdrawalView.js";
-const HelloWorld = () => {
+const Main = () => {
   //state variables
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
@@ -111,4 +111,4 @@ const HelloWorld = () => {
   );
 };
 
-export default HelloWorld;
+export default Main;
