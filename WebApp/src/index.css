@@ -26,7 +26,6 @@ th{
   font-weight: normal;
 }
 .container {
-  
   position: relative;
   flex-direction: column;
   min-width: 70vh;
