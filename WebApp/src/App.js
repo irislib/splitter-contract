@@ -1,11 +1,11 @@
-import HelloWorld from './HelloWorld'
+import Main from './Main'
 import './App.css';
 import React, { Component }  from 'react';
 
 function App() {
   return (
     <div className="App">
-    <HelloWorld></HelloWorld>
+    <Main></Main>
     </div>
   );
 }
