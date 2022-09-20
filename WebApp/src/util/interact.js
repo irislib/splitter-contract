@@ -3,7 +3,7 @@ import React from 'react';
 require("dotenv").config();
 const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
-const web3 = createAlchemyWeb3("wss://eth-goerli.g.alchemy.com/v2/lQPWvm74kzjNOKLKF6sIY66VSyrqBw3I");
+const web3 = createAlchemyWeb3(alchemyKey);
 const contractABI = require("../contract-abi.json");
 const contractAddress = "0x258eE9CAb039295B155Bd3487Df04542975918F3";
 

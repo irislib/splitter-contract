@@ -10,8 +10,7 @@ import {
 import {
   BrowserRouter as Router,
   Routes ,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 import alchemylogo from "./alchemylogo.svg";
@@ -21,6 +20,7 @@ const HelloWorld = () => {
   //state variables
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
+  const [data, setData] = useState("-");
   const [orga, setorga] = useState("0x258eE9CAb039295B155Bd3487Df04542975918F3");
   //collection: 0x39Ec448b891c476e166b3C3242A90830DB556661
   //called only once
@@ -89,6 +89,14 @@ const HelloWorld = () => {
       <div class="containerInner">
         <div class="textContainer">
         <h2 style={{ paddingTop: "0px" }}>Splitter Contract: <a target="_blank" href={"https://goerli.etherscan.io/address/"+orga}>{orga.toString().slice(0,4)}...</a></h2>
+        <div>
+        <table id="organisationtable">
+                  <tr>
+                    <th>Your Shares in Organisation: </th>
+                    <th>{data} </th>
+                  </tr>
+              </table>
+        </div>
         <Router>
         <Routes >
           <Route path="/NFT" element={<NFTWithdrawalView walletAddress={walletAddress}/>} />
