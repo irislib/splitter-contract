@@ -29,3 +29,6 @@ We take no responsibility for your implementation decisions and any security pro
 
 The core development principles and strategies that Iris Contracts is based on include: security in depth, simple and modular code, clarity-driven naming conventions, comprehensive unit testing, pre-and-post-condition sanity checks, code consistency, and regular audits.
 First audit at 21.10.2022
+
+## Contact
+Join our [Discord](https://discord.gg/4CJc74JEUY) (will be moved onto Iris when group chat is ready) or send me a message on [Iris](https://iris.to/?chatWith=ukcw5nlKQTJ-eUaBld6OSKK1g2hWGMMCBSAdtNhxq2E.uj5ExCuzUuQ48k6Io72wAcMVSXDBvTwGZOX7sSy-dEo&s=n4HGTkFoXW9YViI6IqtRkcznsj5werPAPApXiUscm1s&k=Fx%2F2jEBXFAGA).
