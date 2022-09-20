@@ -7,7 +7,7 @@ Web contains the react frontend to interact with this contract.
 
 To get startet go to the WebApp folder.
 
-# How does the Payment Splitter?
+# How does the Payment Splitter work?
 ![Screenshot](SplitterContract.png)
 The contract takes in all types of ERC20 and ERC721 Tokens. 
 It distributes them according to predefined amount of shares to predefined amount of wallets.
