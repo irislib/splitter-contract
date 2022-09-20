@@ -23,13 +23,13 @@ class NFTWithdrawalView extends Component{
         const data2 = await loadCurrentContent2(this.state.nftCollectionInput);
         console.log(data2.toString());
         this.setState({data2: data2.toString()});
-      }
+    }
     
     onWithdrawalPRessed = async () => { 
         const { status } = await withdrawal(this.state.nftCollectionInput,this.props.walletAddress);
         console.log(status.toString());
         this.setState({status:status});
-      }
+    }
     updateCollectionInput(e){
         console.log(e);
         this.setState({nftCollectionInput: e});
