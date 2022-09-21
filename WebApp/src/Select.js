@@ -7,16 +7,8 @@ import NFTWithdrawalView from "./Views/NFTWithdrawalView.js";
 import alchemylogo from "./alchemylogo.svg";
 import Main from './Main';
 
-import {
-    splitterContract,
-    connectWallet,
-    getCurrentWalletConnected,
-  } from "./util/interact.js";
-  import {
-    BrowserRouter as Router,
-    Routes ,
-    Route
-  } from "react-router-dom";
+import {connectWallet, getCurrentWalletConnected,} from "./util/interact.js";
+import {BrowserRouter as Router,Routes ,Route} from "react-router-dom";
 
 const Select = () => {
     const [walletAddress, setWallet] = useState("");
@@ -34,6 +26,7 @@ const Select = () => {
     
         addWalletListener();
       }, []);
+
       function addWalletListener() { 
         if (window.ethereum) {
           window.ethereum.on("accountsChanged", (accounts) => {
@@ -74,7 +67,7 @@ const Select = () => {
     const view = () =>{
         return(
             <div>
-                    <h2 style={{ paddingTop: "18px" }}>Enter Splitter Contract Adress </h2>
+                <h2 style={{ paddingTop: "18px" }}>Enter Splitter Contract Adress </h2>
                     <input
                     type="text"
                     placeholder="NFT collection adress"
@@ -87,7 +80,7 @@ const Select = () => {
                     <button id="publish" onClick={(e) => onClick1(e,"/Deploy")} >
                     Deploy new Contract
                     </button>
-                    </div>
+            </div>
 
         );
     }

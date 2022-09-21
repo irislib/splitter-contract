@@ -1,29 +1,19 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import {
-  splitterContract,
-  connectWallet,
-  getCurrentWalletConnected,
-} from "./util/interact.js";
-import alchemylogo from "./alchemylogo.svg";
-import { Component } from "react/cjs/react.production.min.js";
-import { render } from "@testing-library/react";
+import {getCurrentWalletConnected} from "./util/interact.js";
+import {Component} from "react/cjs/react.production.min.js";
 
 class Main extends Component {
-  //state variables
-  //collection: 0x39Ec448b891c476e166b3C3242A90830DB556661
-  //called only once
+
   constructor(){
     super();
-    this.state = {status:"",data: "-",walletAddress: "",orga: ""};
-   // this.updateCollectionInput = this.updateCollectionInput.bind(this);
-}
-componentDidMount(){
+    this.state = {status:"",data: "-",walletAddress: "",orga: ""};;
+  }
 
-  const { address, status } = async() => { await getCurrentWalletConnected()};
-  this.setState({status:status,walletAddress:address});
-  this.addWalletListener();
-}
+  componentDidMount(){
+    const { address, status } = async() => { await getCurrentWalletConnected()};
+    this.setState({status:status,walletAddress:address});
+    this.addWalletListener();
+  }
 
   addWalletListener() { 
     if (window.ethereum) {
@@ -53,8 +43,7 @@ componentDidMount(){
     window.location.href=href;
   };
 
-  render()
-  { 
+  render(){ 
     return(
     <>
         <h2 style={{ paddingTop: "0px" }}>Splitter Contract: <a target="_blank" href={"https://goerli.etherscan.io/address/"+this.props.orga}>{this.props.orga.toString().slice(0,4)}...</a></h2>
@@ -83,5 +72,4 @@ componentDidMount(){
     )
   };
 }
-
 export default Main;

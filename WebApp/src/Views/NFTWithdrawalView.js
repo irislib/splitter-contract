@@ -9,7 +9,7 @@ import { Component } from "react/cjs/react.production.min.js";
 class NFTWithdrawalView extends Component{
     constructor(){
         super();
-        this.state = {status:"",data: "-",data2: "-",nftCollectionInput: ""};
+        this.state = {status:"",data: "-",data2: "-",nftCollectionInput: "0x39Ec448b891c476e166b3C3242A90830DB556661"};
         this.updateCollectionInput = this.updateCollectionInput.bind(this);
     }
 
