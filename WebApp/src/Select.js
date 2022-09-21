@@ -13,8 +13,9 @@ import {BrowserRouter as Router,Routes ,Route} from "react-router-dom";
 const Select = () => {
     const [walletAddress, setWallet] = useState("");
     const [status, setStatus] = useState("");
-    const [orga, setOrga] = useState("0x258eE9CAb039295B155Bd3487Df04542975918F3");
-
+    const [orga, setOrga] = useState("0x4419Fa19BBCbc6d3408D7d428006c8e1f96640a1");
+    //V2: 0x4419Fa19BBCbc6d3408D7d428006c8e1f96640a1
+    //Old: 0x258eE9CAb039295B155Bd3487Df04542975918F3
     useEffect(async () => {
     
         addSmartContractListener();

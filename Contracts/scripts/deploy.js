@@ -11,13 +11,13 @@ async function main() {
   const payees = ["0xc8eBbD99Ad8b41E6F8d04dceD4D807bB2B08794B","0x29cE882C55a795977B1570Fb1E9Ab88ce21da0cc","0x90cb4b5Ac3596bE86126389Fc47BD82dfd6C35a4"];
   const shares = [4,3,3];
 
-  const NFTSplitter = await hre.ethers.getContractFactory("NFTSplitter");
-  const nFTSplitter = await NFTSplitter.deploy(payees, shares);
+  const PaymentSplitterV2 = await hre.ethers.getContractFactory("PaymentSplitterV2");
+  const paymentSplitterV2 = await PaymentSplitterV2.deploy(payees, shares);
 
-  await nFTSplitter.deployed();
+  await paymentSplitterV2.deployed();
 
   console.log(
-    `NFT splitter deployed to ${nFTSplitter.address}`
+    `NFT splitter deployed to ${paymentSplitterV2.address}`
   );
 }
 

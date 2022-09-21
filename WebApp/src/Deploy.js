@@ -1,6 +1,13 @@
 import React from "react";
+import {Component} from "react/cjs/react.production.min.js";
 
-const Deploy = () => {
-    return("");
+class Deploy extends Component{
+
+
+    render(){
+        return(
+            ""
+        );
+    }
 }
 export default Deploy;
