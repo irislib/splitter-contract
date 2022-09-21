@@ -14,7 +14,7 @@ class ETHWithdrawalView extends Component{
         super();
         this.state = {status:"",data: "-",data2: "-",nftCollectionInput: ""};
     }
-
+    
     render(){
         return (
             <div class="">
