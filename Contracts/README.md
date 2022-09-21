@@ -26,6 +26,26 @@ The PaymentSplitterV2 contract is based on the PaymentSplitter contract by OpenZ
 Note:
 Always send ERC721 token via Safetransfer or SafeMint function to this contract, otherwise you have to use the contracts safetransfer function to transfer the ERC721 token correctly
 
+Functions:
+```
+constructor(payees, shares)
+totalShares()
+totalReleased()
+totalReleasedERC721()
+shares(account)
+released(account)
+releasedERC721(account)
+payee(index)
+release(account)
+releaseERC721()
+```
+Events:
+```
+PayeeAdded(account, shares)
+PaymentReleased(to, amount)
+PaymentReceived(from, amount)
+```
+
 ## Security
 This project is maintained by [Iris](https://www.iris.to), and developed following our high standards for code quality and security. 
 Iris Payment Splitter is meant to provide tested and community-audited code, but please use common sense when doing anything that deals with real money! 
