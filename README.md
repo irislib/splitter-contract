@@ -1,4 +1,4 @@
-# Payment Splitter with NFT integration.
+# Payment Splitter with NFT(ERC721) integration.
 
 Folders: Web, Contracts
 

@@ -1,58 +1,41 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import NFTWithdrawalView from "./Views/NFTWithdrawalView.js";
-import Menu from "./Views/Menu.js";
 import {
   splitterContract,
   connectWallet,
   getCurrentWalletConnected,
 } from "./util/interact.js";
-import {
-  BrowserRouter as Router,
-  Routes ,
-  Route
-} from "react-router-dom";
-
 import alchemylogo from "./alchemylogo.svg";
-import ETHWithdrawalView from "./Views/ETHWithdrawalView.js";
-import TokenWithdrawalView from "./Views/TokenWithdrawalView.js";
-const Main = () => {
+import { Component } from "react/cjs/react.production.min.js";
+import { render } from "@testing-library/react";
+
+class Main extends Component {
   //state variables
-  const [walletAddress, setWallet] = useState("");
-  const [status, setStatus] = useState("");
-  const [data, setData] = useState("-");
-  const [orga, setorga] = useState("0x258eE9CAb039295B155Bd3487Df04542975918F3");
   //collection: 0x39Ec448b891c476e166b3C3242A90830DB556661
   //called only once
-  useEffect(async () => {
-    
-    addSmartContractListener();
+  constructor(){
+    super();
+    this.state = {status:"",data: "-",walletAddress: "",orga: ""};
+   // this.updateCollectionInput = this.updateCollectionInput.bind(this);
+}
+componentDidMount(){
 
-    const { address, status } = await getCurrentWalletConnected();
+  const { address, status } = async() => { await getCurrentWalletConnected()};
+  this.setState({status:status,walletAddress:address});
+  this.addWalletListener();
+}
 
-    setWallet(address);
-    setStatus(status);
-
-    addWalletListener();
-  }, []);
-
-  function addSmartContractListener() { 
-    
-  }
-
-  function addWalletListener() { 
+  addWalletListener() { 
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", (accounts) => {
         if (accounts.length > 0) {
-          setWallet(accounts[0]);
-          setStatus("Enter the NFT collection address in the text-field above.");
+          this.setState({status:"Enter the NFT collection address in the text-field above.",walletAddress:accounts[0]});
         } else {
-          setWallet("");
-          setStatus("🦊 Connect to Metamask using the top right button.");
+          this.setState({status:"🦊 Connect to Metamask using the top right button.",walletAddress:""});
         }
       });
     } else {
-      setStatus(
+      this.setState({status:
         <p>
           {" "}
           🦊{" "}
@@ -61,54 +44,44 @@ const Main = () => {
             browser.
           </a>
         </p>
-      );
+    });
     }
   }
 
-  const connectWalletPressed = async () => {
-    const walletResponse = await connectWallet();
-    setStatus(walletResponse.status);
-    setWallet(walletResponse.address);
+  onClick1(e,href){
+    e.preventDefault();
+    window.location.href=href;
   };
 
-  return (
-    <div class="container" id="container">
-      <div class="topbar">
-      <img id="logo" src={alchemylogo}></img>
-      <button id="walletButton" onClick={connectWalletPressed}>
-          {walletAddress.length > 0 ? (
-            "Connected: " +
-            String(walletAddress).substring(0, 6) +
-            "..." +
-            String(walletAddress).substring(38)
-          ) : (
-            <span>Connect Wallet</span>
-          )}
-        </button>
-      </div>
-      <div class="containerInner">
-        <div class="textContainer">
-        <h2 style={{ paddingTop: "0px" }}>Splitter Contract: <a target="_blank" href={"https://goerli.etherscan.io/address/"+orga}>{orga.toString().slice(0,4)}...</a></h2>
+  render()
+  { 
+    return(
+    <>
+        <h2 style={{ paddingTop: "0px" }}>Splitter Contract: <a target="_blank" href={"https://goerli.etherscan.io/address/"+this.props.orga}>{this.props.orga.toString().slice(0,4)}...</a></h2>
         <div>
         <table id="organisationtable">
                   <tr>
                     <th>Your Shares in Organisation: </th>
-                    <th>{data} </th>
+                    <th>{this.state.data} </th>
                   </tr>
               </table>
         </div>
-        <Router>
-        <Routes >
-          <Route path="/NFT" element={<NFTWithdrawalView walletAddress={walletAddress}/>} />
-          <Route path="/ETH" element={<ETHWithdrawalView />} />
-          <Route path="/Token" element={<TokenWithdrawalView />} />
-          <Route path="/"  element={<Menu />} />
-        </Routes >
-        </Router>
+        <div>
+            <button id="publish" onClick={(e) => this.onClick1(e,"/NFT")} >
+            Withdrawal NFTs
+            </button>
+
+            <button id="publish" onClick={(e) => this.onClick1(e,"/ETH")} >
+            Withdrawal ETH
+            </button>
+
+            <button id="publish" onClick={(e) => this.onClick1(e,"/Token")} >
+            Withdrawal Token
+            </button>
         </div>
-      </div>
-    </div>
-  );
-};
+        </>
+    )
+  };
+}
 
 export default Main;
