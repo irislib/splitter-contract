@@ -13,10 +13,15 @@ The contract takes in all types of ERC20 and ERC721 Tokens.
 It distributes them according to predefined amount of shares to predefined amount of wallets.
 
 Example:
+In this example NFT/NFTs refers to an ERC721 token.
 
-We have Person 1, Person 2 and Person 3. They made an NFT collection together, and decided to pay themself in ETH and NFTs.
-
-Now they want to split the Team allocation according to their share. This contract allows them to do so, with little effort.
+Let's imagine we have Person 1, Person 2 and Person 3. They made an NFT collection together, and decided to pay themself in ETH and NFTs.
+Now they want to split the team allocation according to their shares. Person 1 has 50 shares Person 2 and 3 have both 25 shares.
+They set up a payment splitter contract with these shares. Now every time an NFT is sent to the contract via SafeTransfer
+The contract tracks the NFT.
+In our example the contract received 20 NFTs and 1 ETH. Now Person 1 can call the "withdrawal" function on the frontend,
+or call the "releaseERC721" to received 10 NFTs. He can also call the "release" function, so he can claim 0.5 ETH from the contract.
+Person 2 and 3 can both withdrawal 5 NFTs and 0.25 ETH.
 
 ## Usage
 
