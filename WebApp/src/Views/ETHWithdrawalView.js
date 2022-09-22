@@ -1,20 +1,30 @@
 import React from "react";
 import {
-  splitterContract,
-  connectWallet,
-  withdrawal,
-  loadCurrentContent,
-  loadCurrentContent2,
-  getCurrentWalletConnected,
+  withdrawalETH,
+  releasableETH,
+  totalReleasedETH,
 } from "../util/interact.js";
 import { Component } from "react/cjs/react.production.min.js";
 
 class ETHWithdrawalView extends Component{
     constructor(){
         super();
-        this.state = {status:"",data: "-",data2: "-",nftCollectionInput: ""};
+        this.state = {status:"",withdrawalAmount: "-",totalRelease: "-"};
     }
-    
+    onUpdatePressed = async () => {
+      const withdrawalAmount = await releasableETH(this.props.walletAddress);
+      console.log(withdrawalAmount.toString());
+      this.setState({withdrawalAmount: withdrawalAmount.toString()});
+      const totalRelease = await totalReleasedETH(this.state.nftCollectionInput);
+      console.log(totalRelease.toString());
+      this.setState({totalRelease: totalRelease.toString()});
+  }
+  
+  onWithdrawalPRessed = async () => { 
+      const { status } = await withdrawalETH(this.props.walletAddress);
+      console.log(status.toString());
+      this.setState({status:""});
+  }
     render(){
         return (
             <div class="">
@@ -23,8 +33,8 @@ class ETHWithdrawalView extends Component{
             
               <table id="organisationtable">
                   <tr>
-                    <th>Amount of ETH to withdrawal: </th>
-                    <th>{this.state.data} </th>
+                    <th>Amount of Wei to withdrawal: </th>
+                    <th>{this.state.withdrawalAmount} </th>
                   </tr>
               </table>
             <button id="publish" onClick={this.onUpdatePressed}>

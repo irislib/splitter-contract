@@ -3,8 +3,8 @@ import {
   splitterContract,
   connectWallet,
   withdrawal,
-  loadCurrentContent,
-  loadCurrentContent2,
+  releasableERC20,
+  totalReleasedERC20,
   getCurrentWalletConnected,
 } from "../util/interact.js";
 import { Component } from "react/cjs/react.production.min.js";
@@ -12,9 +12,16 @@ import { Component } from "react/cjs/react.production.min.js";
 class TokenWithdrawalView extends Component{
     constructor(){
         super();
-        this.state = {status:"",data: "-",data2: "-",nftCollectionInput: ""};
+        this.state = {status:"",withdrawalAmount: "-",totalRelease: "-",nftCollectionInput: ""};
     }
-
+    onUpdatePressed = async () => {
+        const withdrawalAmount = await releasableERC20(this.props.walletAddress);
+        console.log(withdrawalAmount.toString());
+        this.setState({withdrawalAmount: withdrawalAmount.toString()});
+        const totalRelease = await totalReleasedERC20(this.state.nftCollectionInput);
+        console.log(totalRelease.toString());
+        this.setState({totalRelease: totalRelease.toString()});
+    }
     render(){
         return(
             <div class="">
@@ -29,7 +36,7 @@ class TokenWithdrawalView extends Component{
                 <table id="organisationtable">
                     <tr>
                         <th>Amount of Token to withdrawal: </th>
-                        <th>{this.state.data} </th>
+                        <th>{this.state.withdrawalAmount} </th>
                     </tr>
                 </table>
                 <button id="publish" onClick={this.onUpdatePressed}>

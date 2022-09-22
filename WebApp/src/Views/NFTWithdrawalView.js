@@ -1,15 +1,16 @@
 import React from "react";
 import {
-  withdrawal,
-  loadCurrentContent,
-  loadCurrentContent2,
+  withdrawalERC721,
+  releasableERC721,
+  totalReleasedERC721,
+  safeTransferERC721,
 } from "../util/interact.js";
 import { Component } from "react/cjs/react.production.min.js";
 
 class NFTWithdrawalView extends Component{
     constructor(){
         super();
-        this.state = {status:"",data: "-",data2: "-",nftCollectionInput: "0x39Ec448b891c476e166b3C3242A90830DB556661"};
+        this.state = {status:"",withdrawalAmount: "-",totalRelease: "-",nftCollectionInput: "0x39Ec448b891c476e166b3C3242A90830DB556661",tokenid: ""};
         this.updateCollectionInput = this.updateCollectionInput.bind(this);
     }
 
@@ -17,16 +18,16 @@ class NFTWithdrawalView extends Component{
         if(this.state.nftCollectionInput == ""){
           return;
         }
-        const data = await loadCurrentContent(this.state.nftCollectionInput,this.props.walletAddress);
-        console.log(data.toString());
-        this.setState({data: data.toString()});
-        const data2 = await loadCurrentContent2(this.state.nftCollectionInput);
-        console.log(data2.toString());
-        this.setState({data2: data2.toString()});
+        const withdrawalAmount = await releasableERC721(this.state.nftCollectionInput,this.props.walletAddress);
+        console.log(withdrawalAmount.toString());
+        this.setState({withdrawalAmount: withdrawalAmount.toString()});
+        const totalRelease = await totalReleasedERC721(this.state.nftCollectionInput);
+        console.log(totalRelease.toString());
+        this.setState({totalRelease: totalRelease.toString()});
     }
     
     onWithdrawalPRessed = async () => { 
-        const { status } = await withdrawal(this.state.nftCollectionInput,this.props.walletAddress);
+        const { status } = await withdrawalERC721(this.state.nftCollectionInput,this.props.walletAddress);
         console.log(status.toString());
         this.setState({status:status});
     }
@@ -34,6 +35,11 @@ class NFTWithdrawalView extends Component{
         console.log(e);
         this.setState({nftCollectionInput: e});
     }
+    onTransferPressed = async () => { 
+      const { status } = await safeTransferERC721(this.props.walletAddress,this.state.nftCollectionInput,this.state.tokenid);
+      console.log(status.toString());
+      this.setState({status:status});
+  }
     render(){
         return(
             <div class="">
@@ -49,11 +55,11 @@ class NFTWithdrawalView extends Component{
               <table id="organisationtable">
                   <tr>
                     <th>Amount of NFTs to withdrawal: </th>
-                    <th>{this.state.data} </th>
+                    <th>{this.state.withdrawalAmount} </th>
                   </tr>
                   <tr>
                     <th>Total NFTs released: </th>
-                    <th>{this.state.data2} </th>
+                    <th>{this.state.totalRelease} </th>
                   </tr>
               </table>
             <button id="publish" onClick={this.onUpdatePressed}>
@@ -62,9 +68,17 @@ class NFTWithdrawalView extends Component{
             <button id="withdrawal" onClick={this.onWithdrawalPRessed}>
               Withdrawal NFTs
             </button>
-            <p>Are there NFTs missing from Balances? Add them <a>here</a></p>
+            <p>Are there NFTs missing from Balances? Add them here:</p>
             <div>
-              
+            <input
+            type="text"
+            placeholder="NFT token id"
+            onChange={(e) => this.setState({tokenid: e.target.value})}
+            value={this.state.tokenid}
+            />
+            <button id="publish" onClick={this.onTransferPressed}>
+              Transfer
+            </button>
             </div>
           </div>
 

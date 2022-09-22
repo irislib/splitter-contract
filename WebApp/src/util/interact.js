@@ -4,20 +4,46 @@ const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(alchemyKey);
 const contractABI = require("../contract-abi.json");
-const contractAddress = "0x258eE9CAb039295B155Bd3487Df04542975918F3";
+const contractAddress = "0x4419Fa19BBCbc6d3408D7d428006c8e1f96640a1";
 
 export const splitterContract = new web3.eth.Contract(
   contractABI,
   contractAddress
 );
-export const loadCurrentContent = async (erc721,address) => { 
-  const content = await splitterContract.methods.releasable(erc721,address).call();
+export const releasableERC721 = async (erc721,address) => { 
+  const content = await splitterContract.methods.releasableERC721(erc721,address).call();
   return content;
 };
-export const loadCurrentContent2 = async (erc721) => { 
-  const content = await splitterContract.methods.totalReleased(erc721).call();
+export const releasableERC20 = async (erc20,address) => { 
+  const content = await splitterContract.methods.releasable(erc20,address).call();
   return content;
 };
+export const releasableETH = async (address) => { 
+  const content = await splitterContract.methods.releasable(address).call();
+  return content;
+};
+
+export const totalReleasedERC721 = async (erc721) => { 
+  const content = await splitterContract.methods.totalReleasedERC721(erc721).call();
+  return content;
+};
+export const totalReleasedERC20 = async (erc20) => { 
+  const content = await splitterContract.methods.totalReleased(erc20).call();
+  return content;
+};
+export const totalReleasedETH = async () => { 
+  const content = await splitterContract.methods.totalReleased().call();
+  return content;
+};
+export const shares = async (address) => { 
+  const content = await splitterContract.methods.shares(address).call();
+  return content;
+};
+export const totalShares = async () => { 
+  const content = await splitterContract.methods.totalShares().call();
+  return content;
+};
+
 export const connectWallet = async () => {
     if (window.ethereum) {
         try {
@@ -96,7 +122,7 @@ export const getCurrentWalletConnected = async () => {
   }
 };
 
-export const withdrawal = async (erc721,address) => {
+export const withdrawalERC721 = async (erc721,address) => {
   //input error handling
   if (!window.ethereum || address === null) {
     return {
@@ -114,7 +140,99 @@ export const withdrawal = async (erc721,address) => {
   const transactionParameters = {
     to: contractAddress, // Required except during contract publications.
     from: address, // must match user's active address.
-    data: splitterContract.methods.transferNft(erc721,address).encodeABI(),
+    data: splitterContract.methods.releaseERC721(erc721,address).encodeABI(),
+  };
+
+  //sign the transaction
+  try {
+    const txHash = await window.ethereum.request({
+      method: "eth_sendTransaction",
+      params: [transactionParameters],
+    });
+    return {
+      status: (
+        <span>
+          ✅{" "}
+          <a target="_blank" href={`https://goerli.etherscan.io/tx/${txHash}`}>
+            View the status of your transaction on Etherscan!
+          </a>
+          <br />
+          ℹ️ Once the transaction is verified by the network, the message will
+          be updated automatically.
+        </span>
+      ),
+    };
+  } catch (error) {
+    return {
+      status: error.message,
+    };
+  }
+};
+export const safeTransferERC721 = async (address,erc721,tokenid) => {
+  //input error handling
+  if (!window.ethereum || erc721 === null) {
+    return {
+      status:
+        "💡 Connect your Metamask wallet to withdrawal NFTs",
+    };
+  }
+
+  if (erc721.trim() === "") {
+    return {
+      status: "Token cannot be an empty string.",
+    };
+  }
+  //set up transaction parameters
+  const transactionParameters = {
+    to: contractAddress, // Required except during contract publications.
+    from: address, // must match user's active address.
+    data: splitterContract.methods.safeTransfer(erc721,tokenid).encodeABI(),
+  };
+
+  //sign the transaction
+  try {
+    const txHash = await window.ethereum.request({
+      method: "eth_sendTransaction",
+      params: [transactionParameters],
+    });
+    return {
+      status: (
+        <span>
+          ✅{" "}
+          <a target="_blank" href={`https://goerli.etherscan.io/tx/${txHash}`}>
+            View the status of your transaction on Etherscan!
+          </a>
+          <br />
+          ℹ️ Once the transaction is verified by the network, the message will
+          be updated automatically.
+        </span>
+      ),
+    };
+  } catch (error) {
+    return {
+      status: error.message,
+    };
+  }
+};
+export const withdrawalETH = async (address) => {
+  //input error handling
+  if (!window.ethereum || address === null) {
+    return {
+      status:
+        "💡 Connect your Metamask wallet to withdrawal NFTs",
+    };
+  }
+
+  if (address.trim() === "") {
+    return {
+      status: "Address cannot be an empty string.",
+    };
+  }
+  //set up transaction parameters
+  const transactionParameters = {
+    to: contractAddress, // Required except during contract publications.
+    from: address, // must match user's active address.
+    data: splitterContract.methods.release(address).encodeABI(),
   };
 
   //sign the transaction

@@ -1,20 +1,31 @@
 import React from "react";
-import {getCurrentWalletConnected} from "./util/interact.js";
+import {
+  getCurrentWalletConnected,
+  shares,
+  totalShares,
+  releasableERC20,
+} from "./util/interact.js";
 import {Component} from "react/cjs/react.production.min.js";
 
 class Main extends Component {
 
   constructor(){
     super();
-    this.state = {status:"",data: "-",walletAddress: "",orga: ""};;
+    this.state = {status:"",shares: "-",totalShares: "-",walletAddress: "",orga: ""};;
   }
 
   componentDidMount(){
-    const { address, status } = async() => { await getCurrentWalletConnected()};
-    this.setState({status:status,walletAddress:address});
+    this.updateState();
     this.addWalletListener();
   }
-
+  updateState = async () =>{
+    const { address, status } = await getCurrentWalletConnected();
+    
+    const _shares = await shares(address);
+    const _totalShares = await totalShares();
+    this.setState({status:status,walletAddress:address,shares:_shares.toString(),totalShares:_totalShares.toString()});
+    
+  }
   addWalletListener() { 
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", (accounts) => {
@@ -44,6 +55,7 @@ class Main extends Component {
   };
 
   render(){ 
+    const pros = (parseFloat(this.state.shares) / parseFloat(this.state.totalShares)) * 100;
     return(
     <>
         <h2 style={{ paddingTop: "0px" }}>Splitter Contract: <a target="_blank" href={"https://goerli.etherscan.io/address/"+this.props.orga}>{this.props.orga.toString().slice(0,4)}...</a></h2>
@@ -51,7 +63,11 @@ class Main extends Component {
         <table id="organisationtable">
                   <tr>
                     <th>Your Shares in Organisation: </th>
-                    <th>{this.state.data} </th>
+                    <th>{this.state.shares} ({pros}%) </th>
+                  </tr>
+                  <tr>
+                    <th>Total Shares in Organisation: </th>
+                    <th>{this.state.totalShares} </th>
                   </tr>
               </table>
         </div>

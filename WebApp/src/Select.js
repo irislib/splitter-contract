@@ -106,8 +106,8 @@ const Select = () => {
                     <Router>
                         <Routes >
                             <Route path="/NFT" element={<NFTWithdrawalView walletAddress={walletAddress}/>} />
-                            <Route path="/ETH" element={<ETHWithdrawalView />} />
-                            <Route path="/Token" element={<TokenWithdrawalView />} />
+                            <Route path="/ETH" element={<ETHWithdrawalView walletAddress={walletAddress}/>} />
+                            <Route path="/Token" element={<TokenWithdrawalView walletAddress={walletAddress}/>} />
                             <Route path="/Contract"  element={<Main orga={orga} />} />
                             <Route path="/Deploy"  element={<Deploy />} />
                             <Route path="/"  element={view()} />

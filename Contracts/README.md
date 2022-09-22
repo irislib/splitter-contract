@@ -38,6 +38,7 @@ releasedERC721(account)
 payee(index)
 release(account)
 releaseERC721()
+safeTransferERC721()
 ```
 Events:
 ```
@@ -45,11 +46,12 @@ PayeeAdded(account, shares)
 PaymentReleased(to, amount)
 PaymentReceived(from, amount)
 ```
-
-constructor([.var-type]#address[# payees, uint256[] shares)] |
+```
+constructor([.var-type]#address[# payees, uint256[] shares)]
 
 Creates an instance of PaymentSplitter where each account in payees is assigned the number of shares at the matching position in the shares array.
-All addresses in payees must be non-zero. Both arrays must have the same non-zero length, and there must be no duplicates in payees. |
+All addresses in payees must be non-zero. Both arrays must have the same non-zero length, and there must be no duplicates in payees.
+```
 
 ## Security
 This project is maintained by [Iris](https://www.iris.to), and developed following our high standards for code quality and security. 
