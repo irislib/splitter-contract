@@ -3,7 +3,6 @@ import {
   getCurrentWalletConnected,
   shares,
   totalShares,
-  releasableERC20,
 } from "./util/interact.js";
 import {Component} from "react/cjs/react.production.min.js";
 

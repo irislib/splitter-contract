@@ -1,13 +1,28 @@
 import React from "react";
 import {Component} from "react/cjs/react.production.min.js";
-
+import {deploy} from "./util/interact.js";
 class Deploy extends Component{
     constructor(){
         super();
         this.state = {status:"",addressArray: [],sharesArray: [],walletAddress: "",orga: "",payees: new Map(),tmpadress:"",tmpshares:""};;
     }
-    
+
+    onDeployPressed = async () => {
+        
+        let payeesA = [];
+        let sharesA = [];
+        this.state.payees.forEach((address,shares) =>{payeesA.push(address);sharesA.push(shares)});
+        console.log(payeesA);
+        const status = await deploy(this.props.walletAddress,payeesA,sharesA);
+        console.log(status.toString());
+        this.setState({status:status});
+    }
+
     addPayee(){
+        if(this.state.tmpshares == "" || this.state.tmpadress == ""){
+            this.setState({status:"Address and amount of Stock cant be empty!"});
+            return;
+        }
         let map = this.state.payees;
         map.set(this.state.tmpshares,this.state.tmpadress);
         this.setState({payees: map});
@@ -26,6 +41,7 @@ class Deploy extends Component{
         return(
             <>
             <h2 style={{ paddingTop: "0px" }}>Deploy Splitter Contract:</h2>
+            {this.state.status}
             <div>
             <table id="organisationtable">
             {test}
@@ -49,7 +65,7 @@ class Deploy extends Component{
                 Add Payee
                 </button>
 
-                <button id="publish" onClick={(e) => this.addPayee()} >
+                <button id="publish" onClick={() => this.onDeployPressed()} >
                 Deploy
                 </button>
             </div>

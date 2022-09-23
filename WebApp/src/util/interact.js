@@ -1,10 +1,12 @@
 import React from 'react';
+
 require("dotenv").config();
 const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(alchemyKey);
 const contractABI = require("../contract-abi.json");
-const contractAddress = "0x4419Fa19BBCbc6d3408D7d428006c8e1f96640a1";
+var contractAddress = "0x4419Fa19BBCbc6d3408D7d428006c8e1f96640a1";
+const contractData = require("../PaymentSplitterV2.json");
 
 export const splitterContract = new web3.eth.Contract(
   contractABI,
@@ -51,7 +53,7 @@ export const connectWallet = async () => {
             method: "eth_requestAccounts",
           });
           const obj = {
-            status: "Enter the address of NFT collection above.",
+            status: "",
             address: addressArray[0],
           };
           return obj;
@@ -89,7 +91,7 @@ export const getCurrentWalletConnected = async () => {
       if (addressArray.length > 0) {
         return {
           address: addressArray[0],
-          status: "Enter the address of NFT collection above.",
+          status: "",
         };
       } else {
         return {
@@ -254,6 +256,43 @@ export const withdrawalETH = async (address) => {
         </span>
       ),
     };
+  } catch (error) {
+    return {
+      status: error.message,
+    };
+  }
+};
+export const deploy = async (address,payees,shares) => {
+  //input error handling
+  if (!window.ethereum || address === null) {
+    return {
+      status:
+        "💡 Connect your Metamask wallet to withdrawal NFTs",
+    };
+  }
+  console.log(payees);
+  if (address.trim() === "") {
+    return {
+      status: "Address cannot be an empty string.",
+    };
+  }
+  //set up transaction parameters
+  console.log(contractData);
+  splitterContract.options.data = contractData.bytecode;
+
+  splitterContract.deploy({
+      arguments: [payees, shares]
+  })
+  .send({
+      from: address,
+      
+  })
+  .then(function(newContractInstance){
+      console.log(newContractInstance.options.address) // instance with the new contract address
+  });
+  //sign the transaction
+  try {
+    
   } catch (error) {
     return {
       status: error.message,

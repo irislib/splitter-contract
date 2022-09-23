@@ -6,16 +6,13 @@ import TokenWithdrawalView from "./Views/TokenWithdrawalView.js";
 import NFTWithdrawalView from "./Views/NFTWithdrawalView.js";
 import alchemylogo from "./assets/android-chrome-192x192.png";
 import Main from './Main';
-
-import {connectWallet, getCurrentWalletConnected,} from "./util/interact.js";
+import {connectWallet, getCurrentWalletConnected,contractAddress} from "./util/interact.js";
 import {BrowserRouter as Router,Routes ,Route} from "react-router-dom";
 
 const Select = () => {
     const [walletAddress, setWallet] = useState("");
     const [status, setStatus] = useState("");
     const [orga, setOrga] = useState("0x4419Fa19BBCbc6d3408D7d428006c8e1f96640a1");
-    //V2: 0x4419Fa19BBCbc6d3408D7d428006c8e1f96640a1
-    //Old: 0x258eE9CAb039295B155Bd3487Df04542975918F3
     useEffect(async () => {
     
         addSmartContractListener();
@@ -33,7 +30,7 @@ const Select = () => {
           window.ethereum.on("accountsChanged", (accounts) => {
             if (accounts.length > 0) {
               setWallet(accounts[0]);
-              setStatus("Enter the NFT collection address in the text-field above.");
+              setStatus("");
             } else {
               setWallet("");
               setStatus("🦊 Connect to Metamask using the top right button.");
@@ -62,22 +59,27 @@ const Select = () => {
       };
 
     const onClick1 =(e,href) =>{
+        console.log(window.contractAddress);
+        window.contractAddress = orga;
         e.preventDefault();
         window.location.href=href;
       };
     const view = () =>{
         return(
             <div>
-                <h2 style={{ paddingTop: "18px" }}>Enter Splitter Contract Adress </h2>
+                <h2 style={{ paddingTop: "18px" }}>Enter Splitter Contract Address </h2>
+                {status}
                     <input
                     type="text"
                     placeholder="NFT collection adress"
                     onChange={(e) => setOrga(e.target.value)}
                     value={orga}
                     />
+                    
                     <button id="publish" onClick={(e) => onClick1(e,"/Contract")} >
                     Select
                     </button>
+                    
                     <button id="publish" onClick={(e) => onClick1(e,"/Deploy")} >
                     Deploy new Contract
                     </button>
@@ -110,7 +112,7 @@ const Select = () => {
                             <Route path="/ETH" element={<ETHWithdrawalView walletAddress={walletAddress}/>} />
                             <Route path="/Token" element={<TokenWithdrawalView walletAddress={walletAddress}/>} />
                             <Route path="/Contract"  element={<Main orga={orga} />} />
-                            <Route path="/Deploy"  element={<Deploy />} />
+                            <Route path="/Deploy"  element={<Deploy walletAddress={walletAddress}/>} />
                             <Route path="/"  element={view()} />
                         </Routes >
                     </Router>
