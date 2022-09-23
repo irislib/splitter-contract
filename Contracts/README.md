@@ -52,6 +52,78 @@ constructor([.var-type]#address[# payees, uint256[] shares)]
 Creates an instance of PaymentSplitter where each account in payees is assigned the number of shares at the matching position in the shares array.
 All addresses in payees must be non-zero. Both arrays must have the same non-zero length, and there must be no duplicates in payees.
 ```
+```
+receive()
+
+The Ether received will be logged with PaymentReceived events. Note that these events are not fully reliable: it’s possible for a contract to receive Ether without triggering this function. This only affects the reliability of the events, and not the actual splitting of Ether.
+To learn more about this see the Solidity documentation for fallback functions.
+```
+```
+totalShares() → uint256
+Getter for the total shares held by payees.
+```
+```
+totalReleased() → uint256
+Getter for the total amount of Ether already released.
+```
+```
+totalReleased(contract IERC20 token) → uint256
+Getter for the total amount of token already released. token should be the address of an IERC20 contract.
+```
+```
+totalReleasedERC721(contract IERC721 token) → uint256
+Getter for the total amount of ERC721 of type token already released.
+```
+```
+shares(address account) → uint256
+Getter for the amount of shares held by an account.
+```
+```
+released(address account) → uint256
+Getter for the amount of Ether already released to a payee.
+```
+```
+released(contract IERC20 token, address account) → uint256
+Getter for the amount of token tokens already released to a payee. token should be the address of an IERC20 contract.
+```
+```
+releasedERC721(contract IERC721 token, address account) → uint256
+Getter for the amount of token tokens already released to a payee. token should be the address of an IERC721 contract.
+```
+```
+payee(uint256 index) → address
+Getter for the address of the payee number index.
+```
+```
+releasable(address account) → uint256
+Getter for the amount of payee’s releasable Ether.
+```
+
+```
+releasable(contract IERC20 token, address account) → uint256
+Getter for the amount of payee’s releasable token tokens. token should be the address of an IERC20 contract.
+```
+
+```
+releasableERC721(contract IERC721 token, address account) → uint256
+Getter for the amount of payee’s releasable token tokens. token should be the address of an IERC721 contract.
+```
+```
+release(address payable account)
+Triggers a transfer to account of the amount of Ether they are owed, according to their percentage of the total shares and their previous withdrawals.
+```
+```
+release(contract IERC20 token, address account)
+Triggers a transfer to account of the amount of token tokens they are owed, according to their percentage of the total shares and their previous withdrawals. token must be the address of an IERC20 contract.
+```
+```
+releaseERC721(contract IERC721 token, address account)
+Triggers a transfer to account of the amount of token tokens they are owed, according to their percentage of the total shares and their previous withdrawals. token must be the address of an IERC721 contract.
+```
+```
+safeTransferERC721(contract IERC721 token,uint 256 tokenid)
+Calles the Safetransfer function of token IERC721 with tokenid.
+```
 
 ## Security
 This project is maintained by [Iris](https://www.iris.to), and developed following our high standards for code quality and security. 
