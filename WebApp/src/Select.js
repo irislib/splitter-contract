@@ -4,7 +4,7 @@ import Deploy from "./Deploy.js";
 import ETHWithdrawalView from "./Views/ETHWithdrawalView.js";
 import TokenWithdrawalView from "./Views/TokenWithdrawalView.js";
 import NFTWithdrawalView from "./Views/NFTWithdrawalView.js";
-import alchemylogo from "./alchemylogo.svg";
+import alchemylogo from "./assets/android-chrome-192x192.png";
 import Main from './Main';
 
 import {connectWallet, getCurrentWalletConnected,} from "./util/interact.js";
@@ -102,6 +102,7 @@ const Select = () => {
             </div>
             <div class="containerInner">
                 <div class="textContainer">
+                <h1>Iris Splitter Contract Manager</h1>
                     <div>
                     <Router>
                         <Routes >
