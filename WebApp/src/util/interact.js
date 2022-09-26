@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 require("dotenv").config();
 const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(alchemyKey);
 const contractABI = require("../contract-abi.json");
-var contractAddress = "0x4419Fa19BBCbc6d3408D7d428006c8e1f96640a1";
+let contractAddress = "0x4419Fa19BBCbc6d3408D7d428006c8e1f96640a1";
 const contractData = require("../PaymentSplitterV2.json");
+
+export const setContractAddress = (_address) => {
+  contractAddress = _address;
+}
 
 export const splitterContract = new web3.eth.Contract(
   contractABI,
@@ -37,7 +41,10 @@ export const totalReleasedETH = async () => {
   const content = await splitterContract.methods.totalReleased().call();
   return content;
 };
-export const shares = async (address) => { 
+export const shares = async (address) => {
+  if(address == ""){
+    return;
+  }
   const content = await splitterContract.methods.shares(address).call();
   return content;
 };

@@ -22,7 +22,13 @@ class Main extends Component {
     
     const _shares = await shares(address);
     const _totalShares = await totalShares();
-    this.setState({status:status,walletAddress:address,shares:_shares.toString(),totalShares:_totalShares.toString()});
+    if(_shares == "" || _totalShares == "" || _totalShares == null || _shares == null){
+      this.setState({status:"Cant find contract or connect Metamask"});
+      return;
+    }else{
+      this.setState({status:status,walletAddress:address,shares:_shares.toString(),totalShares:_totalShares.toString()});
+    }
+    
     
   }
   addWalletListener() { 
@@ -50,10 +56,11 @@ class Main extends Component {
 
   onClick1(e,href){
     e.preventDefault();
-    window.location.href=href;
+    this.props.navigation(href);
   };
 
   render(){ 
+    console.log("main" + this.props.orga);
     const pros = (parseFloat(this.state.shares) / parseFloat(this.state.totalShares)) * 100;
     return(
     <>

@@ -6,13 +6,15 @@ import TokenWithdrawalView from "./Views/TokenWithdrawalView.js";
 import NFTWithdrawalView from "./Views/NFTWithdrawalView.js";
 import alchemylogo from "./assets/android-chrome-192x192.png";
 import Main from './Main';
-import {connectWallet, getCurrentWalletConnected,contractAddress} from "./util/interact.js";
+import {connectWallet, getCurrentWalletConnected,setContractAddress} from "./util/interact.js";
 import {BrowserRouter as Router,Routes ,Route} from "react-router-dom";
+import { useNavigate } from 'react-router';
 
 const Select = () => {
     const [walletAddress, setWallet] = useState("");
     const [status, setStatus] = useState("");
     const [orga, setOrga] = useState("0x4419Fa19BBCbc6d3408D7d428006c8e1f96640a1");
+    const navigate = useNavigate();
     useEffect(async () => {
     
         addSmartContractListener();
@@ -62,8 +64,12 @@ const Select = () => {
         console.log(window.contractAddress);
         window.contractAddress = orga;
         e.preventDefault();
-        window.location.href=href;
+        navigate(href);
       };
+    const setAddressContract =(e) =>{
+      setContractAddress(e.target.value);
+      setOrga(e.target.value);
+    }
     const view = () =>{
         return(
             <div>
@@ -72,7 +78,7 @@ const Select = () => {
                     <input
                     type="text"
                     placeholder="NFT collection adress"
-                    onChange={(e) => setOrga(e.target.value)}
+                    onChange={(e) => setAddressContract(e)}
                     value={orga}
                     />
                     
@@ -90,7 +96,7 @@ const Select = () => {
     return(
         <div class="container" id="container">
             <div class="topbar">
-                    <a href="/"><img id="logo" src={alchemylogo}></img></a>
+                    <a onClick={(e) => onClick1(e,"/")}><img id="logo" src={alchemylogo}></img></a>
                     <button id="walletButton" onClick={connectWalletPressed}>
                         {walletAddress.length > 0 ? (
                             "Connected: " +
@@ -106,16 +112,14 @@ const Select = () => {
                 <div class="textContainer">
                 <h1>Iris Splitter Contract Manager</h1>
                     <div>
-                    <Router>
                         <Routes >
                             <Route path="/NFT" element={<NFTWithdrawalView walletAddress={walletAddress}/>} />
                             <Route path="/ETH" element={<ETHWithdrawalView walletAddress={walletAddress}/>} />
                             <Route path="/Token" element={<TokenWithdrawalView walletAddress={walletAddress}/>} />
-                            <Route path="/Contract"  element={<Main orga={orga} />} />
+                            <Route path="/Contract"  element={<Main orga={orga} navigation={navigate}/>} />
                             <Route path="/Deploy"  element={<Deploy walletAddress={walletAddress}/>} />
                             <Route path="/"  element={view()} />
                         </Routes >
-                    </Router>
                     </div>
                 </div>
             </div>
