@@ -172,6 +172,52 @@ export const withdrawalERC721 = async (erc721,address) => {
     };
   }
 };
+export const withdrawalERC20 = async (erc20,address) => {
+  //input error handling
+  if (!window.ethereum || address === null) {
+    return {
+      status:
+        "Connect your Metamask wallet to withdrawal NFTs",
+    };
+  }
+
+  if (erc20.trim() === "") {
+    return {
+      status: "Token cannot be an empty string.",
+    };
+  }
+  //set up transaction parameters
+  const transactionParameters = {
+    to: contractAddress, // Required except during contract publications.
+    from: address, // must match user's active address.
+    data: splitterContract.methods.release(erc20,address).encodeABI(),
+  };
+
+  //sign the transaction
+  try {
+    const txHash = await window.ethereum.request({
+      method: "eth_sendTransaction",
+      params: [transactionParameters],
+    });
+    return {
+      status: (
+        <span>
+          ✅{" "}
+          <a target="_blank" rel="noopener noreferrer" href={`https://goerli.etherscan.io/tx/${txHash}`}>
+            View the status of your transaction on Etherscan!
+          </a>
+          <br />
+          ℹ️ Once the transaction is verified by the network, the message will
+          be updated automatically.
+        </span>
+      ),
+    };
+  } catch (error) {
+    return {
+      status: error.message,
+    };
+  }
+};
 export const safeTransferERC721 = async (address,erc721,tokenid) => {
   //input error handling
   if (!window.ethereum || erc721 === null) {
