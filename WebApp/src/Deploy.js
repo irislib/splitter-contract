@@ -18,7 +18,6 @@ class Deploy extends Component{
         }
         console.log(payeesA);
         const status = await deploy(this.props.walletAddress,payeesA,sharesA);
-        console.log(status.toString());
         this.setState({status:status});
     }
 

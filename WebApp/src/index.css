@@ -163,7 +163,9 @@ button {
   margin-top: 0vh;
   width: 3vh;
 }
-
+#logo:hover{
+  cursor:pointer;
+}
 #walletButton {
   padding: 7px 16px;
   background-color: var(--body-bg);
