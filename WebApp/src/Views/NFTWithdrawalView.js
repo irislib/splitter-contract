@@ -15,7 +15,7 @@ class NFTWithdrawalView extends Component{
     }
 
     onUpdatePressed = async () => {
-        if(this.state.nftCollectionInput == ""){
+        if(this.state.nftCollectionInput === ""){
           return;
         }
         const withdrawalAmount = await releasableERC721(this.state.nftCollectionInput,this.props.walletAddress);

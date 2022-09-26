@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import React from "react";
 require("dotenv").config();
 const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
@@ -42,7 +41,7 @@ export const totalReleasedETH = async () => {
   return content;
 };
 export const shares = async (address) => {
-  if(address == ""){
+  if(address === ""){
     return;
   }
   const content = await splitterContract.methods.shares(address).call();
@@ -76,9 +75,7 @@ export const connectWallet = async () => {
           status: (
             <span>
               <p>
-                {" "}
-                🦊{" "}
-                <a target="_blank" href={`https://metamask.io/download.html`}>
+                <a target="_blank" rel="noopener noreferrer" href={`https://metamask.io/download.html`}>
                   You must install Metamask, a virtual Ethereum wallet, in your
                   browser.
                 </a>
@@ -103,7 +100,7 @@ export const getCurrentWalletConnected = async () => {
       } else {
         return {
           address: "",
-          status: "🦊 Connect to Metamask using the top right button.",
+          status: "Connect to Metamask using the top right button.",
         };
       }
     } catch (err) {
@@ -118,9 +115,7 @@ export const getCurrentWalletConnected = async () => {
       status: (
         <span>
           <p>
-            {" "}
-            🦊{" "}
-            <a target="_blank" href={`https://metamask.io/download.html`}>
+            <a target="_blank" rel="noopener noreferrer" href={`https://metamask.io/download.html`}>
               You must install Metamask, a virtual Ethereum wallet, in your
               browser.
             </a>
@@ -136,7 +131,7 @@ export const withdrawalERC721 = async (erc721,address) => {
   if (!window.ethereum || address === null) {
     return {
       status:
-        "💡 Connect your Metamask wallet to withdrawal NFTs",
+        "Connect your Metamask wallet to withdrawal NFTs",
     };
   }
 
@@ -162,7 +157,7 @@ export const withdrawalERC721 = async (erc721,address) => {
       status: (
         <span>
           ✅{" "}
-          <a target="_blank" href={`https://goerli.etherscan.io/tx/${txHash}`}>
+          <a target="_blank" rel="noopener noreferrer" href={`https://goerli.etherscan.io/tx/${txHash}`}>
             View the status of your transaction on Etherscan!
           </a>
           <br />
@@ -208,7 +203,7 @@ export const safeTransferERC721 = async (address,erc721,tokenid) => {
       status: (
         <span>
           ✅{" "}
-          <a target="_blank" href={`https://goerli.etherscan.io/tx/${txHash}`}>
+          <a target="_blank" rel="noopener noreferrer" href={`https://goerli.etherscan.io/tx/${txHash}`}>
             View the status of your transaction on Etherscan!
           </a>
           <br />
@@ -254,7 +249,7 @@ export const withdrawalETH = async (address) => {
       status: (
         <span>
           ✅{" "}
-          <a target="_blank" href={`https://goerli.etherscan.io/tx/${txHash}`}>
+          <a target="_blank" rel="noopener noreferrer" href={`https://goerli.etherscan.io/tx/${txHash}`}>
             View the status of your transaction on Etherscan!
           </a>
           <br />
@@ -284,6 +279,7 @@ export const deploy = async (address,payees,shares) => {
     };
   }
   //set up transaction parameters
+  try {
   console.log(contractData);
   splitterContract.options.data = contractData.bytecode;
 
@@ -295,11 +291,20 @@ export const deploy = async (address,payees,shares) => {
       
   })
   .then(function(newContractInstance){
-      console.log(newContractInstance.options.address) // instance with the new contract address
+    return {
+      status: (
+        <span>
+          ✅{" "}
+          <a target="_blank" rel="noopener noreferrer" href={`https://goerli.etherscan.io/address/${newContractInstance.options.address}`}>
+            View the status of your contract on Etherscan!
+          </a>
+          <br />
+          ℹ️ Once the transaction is verified by the network, the message will
+          be updated automatically.
+        </span>
+      ),
+    };
   });
-  //sign the transaction
-  try {
-    
   } catch (error) {
     return {
       status: error.message,

@@ -1,11 +1,7 @@
 import React from "react";
 import {
-  splitterContract,
-  connectWallet,
-  withdrawal,
   releasableERC20,
   totalReleasedERC20,
-  getCurrentWalletConnected,
 } from "../util/interact.js";
 import { Component } from "react/cjs/react.production.min.js";
 

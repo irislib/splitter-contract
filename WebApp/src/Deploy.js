@@ -12,6 +12,10 @@ class Deploy extends Component{
         let payeesA = [];
         let sharesA = [];
         this.state.payees.forEach((address,shares) =>{payeesA.push(address);sharesA.push(shares)});
+        if(payeesA.length === 0){
+            this.setState({status:"One Payee is requiered!"});
+            return;
+        }
         console.log(payeesA);
         const status = await deploy(this.props.walletAddress,payeesA,sharesA);
         console.log(status.toString());
@@ -19,7 +23,7 @@ class Deploy extends Component{
     }
 
     addPayee(){
-        if(this.state.tmpshares == "" || this.state.tmpadress == ""){
+        if(this.state.tmpshares === "" || this.state.tmpadress === ""){
             this.setState({status:"Address and amount of Stock cant be empty!"});
             return;
         }

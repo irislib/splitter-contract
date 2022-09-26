@@ -22,7 +22,7 @@ class Main extends Component {
     
     const _shares = await shares(address);
     const _totalShares = await totalShares();
-    if(_shares == "" || _totalShares == "" || _totalShares == null || _shares == null){
+    if(_shares === "" || _totalShares === "" || _totalShares === null || _shares === null){
       this.setState({status:"Cant find contract or connect Metamask"});
       return;
     }else{
@@ -45,7 +45,7 @@ class Main extends Component {
         <p>
           {" "}
           🦊{" "}
-          <a target="_blank" href={`https://metamask.io/download.html`}>
+          <a target="_blank" rel="noopener noreferrer" href={`https://metamask.io/download.html`}>
             You must install Metamask, a virtual Ethereum wallet, in your
             browser.
           </a>
@@ -60,11 +60,10 @@ class Main extends Component {
   };
 
   render(){ 
-    console.log("main" + this.props.orga);
     const pros = (parseFloat(this.state.shares) / parseFloat(this.state.totalShares)) * 100;
     return(
     <>
-        <h2 style={{ paddingTop: "0px" }}>Splitter Contract: <a target="_blank" href={"https://goerli.etherscan.io/address/"+this.props.orga}>{this.props.orga.toString().slice(0,4)}...</a></h2>
+        <h2 style={{ paddingTop: "0px" }}>Splitter Contract: <a rel="noopener noreferrer" target="_blank" href={"https://goerli.etherscan.io/address/"+this.props.orga}>{this.props.orga.toString().slice(0,4)}...</a></h2>
         <div>
         <table id="organisationtable">
                   <tr>

@@ -7,7 +7,7 @@ import NFTWithdrawalView from "./Views/NFTWithdrawalView.js";
 import alchemylogo from "./assets/android-chrome-192x192.png";
 import Main from './Main';
 import {connectWallet, getCurrentWalletConnected,setContractAddress} from "./util/interact.js";
-import {BrowserRouter as Router,Routes ,Route} from "react-router-dom";
+import {Routes ,Route} from "react-router-dom";
 import { useNavigate } from 'react-router';
 
 const Select = () => {
@@ -43,7 +43,7 @@ const Select = () => {
             <p>
               {" "}
               🦊{" "}
-              <a target="_blank" href={`https://metamask.io/download.html`}>
+              <a target="_blank" rel="noopener noreferrer" href={`https://metamask.io/download.html`}>
                 You must install Metamask, a virtual Ethereum wallet, in your
                 browser.
               </a>
