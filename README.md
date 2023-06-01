@@ -1,5 +1,8 @@
 # Payment Splitter with NFT(ERC721) integration.
 
+##Important!!!
+This smart contract system is outdated. Please message me before integration!  
+
 Folders: Web, Contracts
 
 Contracts contains all solidity contracts, and deploy scripts.
