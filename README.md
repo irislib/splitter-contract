@@ -1,6 +1,6 @@
 # Payment Splitter with NFT(ERC721) integration.
 
-##Important!!!
+## Important!!!
 This smart contract system is outdated. Please message me before integration!  
 
 Folders: Web, Contracts
