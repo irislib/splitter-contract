@@ -3,13 +3,6 @@
 ## Important!!!
 This smart contract system is outdated. Please message me before integration!  
 
-Folders: Web, Contracts
-
-Contracts contains all solidity contracts, and deploy scripts.
-Web contains the react frontend to interact with this contract.
-
-To get startet go to the WebApp folder.
-
 ## How does the Payment Splitter work?
 ![Screenshot](SplitterContract.png)
 The contract takes in all types of ERC20 and ERC721 Tokens. 
