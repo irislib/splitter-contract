@@ -1,11 +1,7 @@
 # Payment Splitter with NFT(ERC721) integration.
 
-Folders: Web, Contracts
-
-Contracts contains all solidity contracts, and deploy scripts.
-Web contains the react frontend to interact with this contract.
-
-To get startet go to the WebApp folder.
+## Important!!!
+This smart contract system is outdated. Please message me before integration!  
 
 ## How does the Payment Splitter work?
 ![Screenshot](SplitterContract.png)
